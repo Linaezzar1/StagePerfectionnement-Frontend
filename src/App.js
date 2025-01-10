@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import LoginSignup from "./components/loginSignup/LoginSignup";
 import Sidebar from "./components/dashboard/Sidebar";
+import Maindash from './components/dashboard/Maindashboard/Maindash';
+
 
 function App() {
   return (
@@ -13,10 +15,12 @@ function App() {
         <Route path='LoginSignup' element= {<LoginSignup /> } />
         {/* Route Sidebar avec le style flouté */}
         <Route
-          path="/sidebar"
+          path="/dashboard"
           element={
             <div className="AppGlass">
               <Sidebar />
+              <Maindash />
+             
             </div>
           }
         />

@@ -27,6 +27,9 @@ const Sidebar = () => {
             </div>
           );
         })}
+         <div className="menuItem">
+          <UilSignOutAlt />
+        </div>
         </div>
       
     </div>

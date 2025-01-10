@@ -6,29 +6,28 @@ import {
     UilPackage,
     UilChart,
     UilSignOutAlt,
-  } from "@iconscout/react-unicons";
-  
-  // Sidebar Data
-  export const SidebarData = [
+} from "@iconscout/react-unicons";
+
+
+// Sidebar Data
+export const SidebarData = [
     {
-      icon: UilEstate,
-      heading: "Dashboard",
+        icon: UilEstate,
+        heading: "Dashboard",
     },
     {
-      icon: UilClipboardAlt,
-      heading: "Orders",
+        icon: UilClipboardAlt,
+        heading: "Files",
     },
     {
-      icon: UilUsersAlt,
-      heading: "Customers",
+        icon: UilUsersAlt,
+        heading: "Customers",
     },
+    
     {
-      icon: UilPackage,
-      heading: "Products",
+        icon: UilChart,
+        heading: "Analytics",
     },
-    {
-      icon: UilChart,
-      heading: "Analytics",
-    },
-  ];
-  
+];
+
+
