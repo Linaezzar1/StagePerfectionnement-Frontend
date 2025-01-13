@@ -1,6 +1,57 @@
-.files {
-    padding: 1rem; /* Espacement interne */
-    background-color: #fff; /* Couleur de fond */
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
-}
+.files-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .files-page h1 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .files-page p {
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #ddd;
+  }
+  
+  .files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    background-color: #ddd;
+    border-radius: 10px;
+  }
+  
+  .file-item {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 10px;
+  
+  }
+  
+  .file-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .file-details {
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+  }
+  .files{
+    margin-top: 50px;
+  }
