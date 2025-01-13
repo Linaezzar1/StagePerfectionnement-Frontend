@@ -1,9 +1,14 @@
 .Sidebar{
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
     padding-top: 2rem;
     transition: all 300ms ease;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 11rem;
+    z-index: 1000;
 }
 
 .logo{

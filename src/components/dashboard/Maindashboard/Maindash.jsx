@@ -1,13 +1,13 @@
 import React from 'react'
-import './Maindash.css'
-import UserMenu from '../UserMenu/UserMenu'
+
+
+import Dash from '../Dash/Dash'
 
 
 const Maindash = () => {
   return (
     <div className='MainDash'>
-       <UserMenu />
-        
+        <Dash />
     </div>
   )
 }

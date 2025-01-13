@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   
-  
 }
 body {
   font-family: 'Inter', sans-serif;
@@ -12,6 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
 :root {
@@ -29,23 +29,27 @@ body {
 
 .AppGlass {
   display: grid;
-  height: 95vh; /* Prend presque toute la hauteur de l'écran */
-  width: 95vw; /* Prend presque toute la largeur de l'écran */
+  grid-template-columns: 11rem auto; /* Sidebar à gauche, contenu à droite */
+  height: 100vh; /* Prend toute la hauteur de l'écran */
+  width: 100vw; /* Prend toute la largeur de l'écran */
   background: var(--glass);
-  border-radius: 2rem; /* Border-radius visible */
+  
   gap: 16px;
-  grid-template-columns: 11rem auto 20rem; /* Configuration des colonnes */
-  overflow: hidden;
+  overflow: hidden; 
   color: var(--black);
   background: linear-gradient(
-    106.37deg,
-    #a7a4a0aa 29.63%,
-    #8781717e 51.55%,
-    #6f634e9a 90.85%
+      106.37deg,
+      #a7a4a0aa 29.63%,
+      #8781717e 51.55%,
+      #6f634e9a 90.85%
   );
-  margin: auto; /* Centrer l'élément sur la page */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre pour l'effet 3D */
+  margin: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+}
+main {
+ margin: 40px 10px;
+ 
 }
 
 @media screen and (max-width: 1200px) {
