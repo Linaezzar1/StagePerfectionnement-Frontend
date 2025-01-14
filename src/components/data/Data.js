@@ -4,8 +4,8 @@ import {
     UilClipboardAlt,
     UilUsersAlt,
     UilChart,
-    UilSignOutAlt,
 } from "@iconscout/react-unicons";
+
 
 
 // Sidebar Data
@@ -32,5 +32,4 @@ export const SidebarData = [
         path: '/analytics'
     },
 ];
-
 

@@ -5,10 +5,18 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { Dropdown } from 'react-bootstrap';
 import { CgProfile } from "react-icons/cg";
-import { IoSettingsOutline } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
+import { useNavigate } from 'react-router-dom';
+import { MdOutlineDashboard } from "react-icons/md";
+import { MdOutlineAnalytics } from "react-icons/md";
 
 const Header = () => {
+
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+      navigate('/profile'); 
+    };
     return (
         <div className='boxContainer'>
             <Box display="flex" justifyContent="space-between" p={2}>
@@ -34,8 +42,9 @@ const Header = () => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className='dropdown-menu'>
-                            <Dropdown.Item href="#/action-1"> <CgProfile /> My Profile</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2"> <IoSettingsOutline /> Settings</Dropdown.Item>
+                            <Dropdown.Item onClick={handleClick}> <CgProfile /> My Profile </Dropdown.Item>
+                            <Dropdown.Item href="#/action-2"> <MdOutlineDashboard /> Dashboard</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2"> <MdOutlineAnalytics /> Analytics</Dropdown.Item>
                             <Dropdown.Item href="#/action-3" className='logout-menu'><LuLogOut className='icon-logout' /> Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>

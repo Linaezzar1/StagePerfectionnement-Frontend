@@ -1,0 +1,61 @@
+.profile-page {
+    width: 60vw; 
+    max-width: 700px; 
+    margin: 50px auto; 
+    padding: 30px; 
+    background-color: #f9f9f9a1; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .profile-page h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px; 
+    font-size: 30px; 
+    font-weight: bold;
+  }
+  
+  .profile-info {
+    background-color: #ffffffb9; 
+    padding: 25px;
+    border-radius: 8px; 
+    border: 1px solid #e0e0e0; 
+  }
+  
+  .info-item {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .info-item label {
+    font-size: 16px;
+    color: #555; 
+    font-weight: 500; 
+    text-align: left;
+  }
+  
+  .info-item input {
+    width: 100%; 
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 6px; 
+    background-color: #fafafad2; 
+    transition: border-color 0.3s ease; 
+  }
+  
+  .info-item input:focus {
+    border-color: #007bff; 
+    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+  
+  /* Style pour les champs désactivés */
+  .info-item input:disabled {
+    background-color: #f0f0f0; 
+    color: #666; 
+    cursor: not-allowed; 
+  }

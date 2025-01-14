@@ -9,6 +9,7 @@ import Analytics from './components/dashboard/Analytics/Analytics';
 import Customers from './components/dashboard/Customers/Customers';
 import Header from './components/Header/Header';
 import DashboardLayout from './components/dashboard/Dashboardlayout';
+import Profile from './components/Profile/Profile';
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
                         {/* Route par défaut pour /dashboard */}
                         <Route index element={<Dash />} />
                     </Route>
+
+                    <Route path='/profile' element={<Profile/>} />
 
                     {/* Route par défaut (redirige vers /login) */}
                     <Route path="/" element={<LoginSignup />} />
