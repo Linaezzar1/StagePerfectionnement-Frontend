@@ -6,8 +6,16 @@
     background-color: #f9f9f9a1; 
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    display: flex; 
+    align-items: center;
+    flex-direction: column;
   }
-  
+  .profile-page .icon{
+    font-size: 30px;
+    align-self: flex-start; /* Aligner l'icône en haut */
+    margin-right: 20px;
+    
+  }
   .profile-page h1 {
     text-align: center;
     color: #333;
@@ -21,6 +29,7 @@
     padding: 25px;
     border-radius: 8px; 
     border: 1px solid #e0e0e0; 
+    width: 60%;
   }
   
   .info-item {

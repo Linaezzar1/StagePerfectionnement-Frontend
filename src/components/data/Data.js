@@ -13,23 +13,24 @@ export const SidebarData = [
     {
         icon: UilEstate,
         heading: "Dashboard",
-        path: '/dashboard/maindash'
+        path: '/dashboard/maindash' 
+        
     },
     {
         icon: UilClipboardAlt,
         heading: "Files",
-        path: '/files'
+        path: '/dashboard/files'
     },
     {
         icon: UilUsersAlt,
         heading: "Customers",
-        path: '/customers'
+        path: '/dashboard/customers'
     },
     
     {
         icon: UilChart,
         heading: "Analytics",
-        path: '/analytics'
+        path: '/dashboard/analytics'
     },
 ];
 

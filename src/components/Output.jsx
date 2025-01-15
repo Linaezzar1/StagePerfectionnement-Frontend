@@ -49,7 +49,9 @@ const Output = ({ editorRef, language }) => {
         color={isError ? "red.400" : ""}
         border="1px solid"
         borderRadius={4}
-        borderColor={isError ? "red.500" : "#333"}
+        borderColor={isError ? "red.500" : "transparent"}
+        
+        backdropFilter="blur(20px)"
       >
         {output
           ? output.map((line, i) => <Text key={i}>{line}</Text>)

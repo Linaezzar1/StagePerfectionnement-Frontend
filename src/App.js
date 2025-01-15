@@ -11,15 +11,17 @@ import Header from './components/Header/Header';
 import DashboardLayout from './components/dashboard/Dashboardlayout';
 import Profile from './components/Profile/Profile';
 import EditorWrapper from './components/EditorWrapper';
-import { ChakraProvider } from '@chakra-ui/react';
+import MainAnalytics from './components/mainAnalytics/MainAnalytics';
+
 
 
 
 function App() {
   return (
-    <ChakraProvider>
+   
       <div className="App">
         <BrowserRouter>
+       
           <Routes>
             {/* Route Login */}
             <Route path='/login' element={<LoginSignup />} />
@@ -40,13 +42,23 @@ function App() {
 
             <Route path='/profile' element={<Profile />} />
 
-            <Route path='/editor' element={<EditorWrapper />} />
+            <Route
+            path='/editor'
+            element={
+              <>
+                <Header />
+                <EditorWrapper />
+              </>
+            }
+          />
             {/* Route par défaut (redirige vers /login) */}
             <Route path="/" element={<LoginSignup />} />
+
+            <Route path='/mainAnalytics' element={<MainAnalytics />} />
           </Routes>
         </BrowserRouter>
         </div >
-    </ChakraProvider>
+   
    
   );
 }

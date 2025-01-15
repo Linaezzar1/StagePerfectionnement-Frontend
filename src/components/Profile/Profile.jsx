@@ -2,6 +2,8 @@ import React from 'react'
 import './Profile.css'
 
 const Profile = () => {
+   
+
     const user = {
         name: 'John',
         lastname: 'Doe',
@@ -10,6 +12,7 @@ const Profile = () => {
 
     return (
         <div className="profile-page">
+            
             <h1>User Profile</h1>
             <div className="profile-info">
                 <div className="info-item">

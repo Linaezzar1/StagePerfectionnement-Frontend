@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './Files.css';
-import { FaSearch } from "react-icons/fa";
 
 const Files = () => {
 
