@@ -16,8 +16,12 @@
     "@themesberg/react-bootstrap": "^1.4.1",
     "apexcharts": "^4.3.0",
     "axios": "^1.7.9",
+    "browserify-fs": "^1.0.0",
     "cra-template": "1.2.0",
     "framer-motion": "^11.18.0",
+    "monaco-editor": "^0.52.2",
+    "path-browserify": "^1.0.1",
+    "prettier": "^3.4.2",
     "react": "18.2.0",
     "react-apexcharts": "^1.7.0",
     "react-bootstrap": "^2.10.7",
@@ -29,6 +33,7 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.15.0",
     "redux": "^5.0.1",
+    "url": "^0.11.4",
     "web-vitals": "^4.2.4"
   },
   "scripts": {
