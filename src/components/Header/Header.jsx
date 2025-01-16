@@ -14,9 +14,6 @@ const Header = () => {
 
     const navigate = useNavigate();
 
-    const handleClick = () => {
-      navigate('/profile'); 
-    };
     return (
         <div className='boxContainer'>
             <Box display="flex" justifyContent="space-between" p={2} >
@@ -42,9 +39,9 @@ const Header = () => {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu className='dropdown-menu'>
-                            <Dropdown.Item onClick={handleClick}> <CgProfile /> My Profile </Dropdown.Item>
+                            <Dropdown.Item onClick={ ()=>  navigate('/profile') }> <CgProfile /> My Profile </Dropdown.Item>
                             <Dropdown.Item onClick={ ()=>  navigate('/dashboard/maindash') }> <MdOutlineDashboard /> Dashboard</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2"> <MdOutlineAnalytics /> Analytics</Dropdown.Item>
+                            <Dropdown.Item onClick={ ()=>  navigate('/mainAnalytics') }> <MdOutlineAnalytics /> Analytics</Dropdown.Item>
                             <Dropdown.Item href="#/action-3" className='logout-menu'><LuLogOut className='icon-logout' /> Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>

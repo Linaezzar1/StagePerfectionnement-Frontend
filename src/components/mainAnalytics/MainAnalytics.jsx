@@ -24,9 +24,9 @@ const MainAnalytics = () => {
     ];
 
     return (
-        <div className="analytics-container">
+        <div className="mainAnalytics-container">
             <h1 className="analytics-title">Analytics des Développeurs</h1>
-            <div className='analytics'>
+            <div className='mainAnalytics'>
 
                 {/* Cartes des statistiques */}
                 <div className="stats-grid">

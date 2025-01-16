@@ -1,5 +1,5 @@
 /* Conteneur principal */
-.analytics-container {
+.mainAnalytics-container {
     padding: 20px;
     font-family: Arial, sans-serif;
     background-color: transparent;
@@ -9,7 +9,7 @@
    
   }
 
-  .analytics{
+  .mainAnalytics{
     display: flex;
     justify-content: space-around;
     width: 100%;
