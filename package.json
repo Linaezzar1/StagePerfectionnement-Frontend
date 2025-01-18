@@ -16,7 +16,6 @@
     "@themesberg/react-bootstrap": "^1.4.1",
     "apexcharts": "^4.3.0",
     "axios": "^1.7.9",
-    "browserify-fs": "^1.0.0",
     "cra-template": "1.2.0",
     "framer-motion": "^11.18.0",
     "monaco-editor": "^0.52.2",
