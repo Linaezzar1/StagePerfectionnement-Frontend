@@ -4,6 +4,7 @@ import './loginSignup.css';
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import axios from 'axios';
 import { login, setLoading, setError } from '../../store/action'; 
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -13,6 +14,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector(state => state.isLoading);
     const error = useSelector(state => state.error);
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -45,13 +47,15 @@ const Login = () => {
                 password: password,
             });
             console.log("Login successful");
-            const token = response.data.mytoken; // Assuming the token is returned in the response
+            const token = response.data.mytoken; 
             console.log(response);
             console.log("Login successful");
             
-            localStorage.setItem('token', token); // Save the token to localStorage
-            dispatch(login(token)); // Dispatch the token to the Redux store
+            localStorage.setItem('token', token); 
+            dispatch(login(token)); 
             dispatch(setLoading(false));
+
+            navigate('/editor');
         } catch (error) {
             console.error(error);
             dispatch(setError("Login failed. Please check your credentials."));

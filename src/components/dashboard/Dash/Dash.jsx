@@ -1,10 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Dash.css'
 import chart from '../../../imgs/chart-dynamic-premium.png'
+import axios from 'axios';
 
 
 
 const Maindash = () => {
+
+  const [currentUser, setCurrentUser] = useState(null); // State pour stocker les infos de l'utilisateur
+  const [loading, setLoading] = useState(true); // State pour gérer le chargement
+
+  // Fonction pour récupérer l'utilisateur connecté
+  const fetchCurrentUser = async () => {
+      try {
+          const token = localStorage.getItem('token'); // Récupère le token JWT
+          const response = await axios.get('http://localhost:3000/user/currentUser', {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              },
+          });
+          setCurrentUser(response.data); // Met à jour le state avec les données de l'utilisateur
+      } catch (error) {
+          console.error('Error fetching current user:', error);
+      } finally {
+          setLoading(false); // Arrête le chargement
+      }
+  };
+
+  // Appel de la fonction au montage du composant
+  useEffect(() => {
+      fetchCurrentUser();
+  }, []);
+
+  // Affichage pendant le chargement
+  if (loading) {
+      return <div>Loading...</div>; // Affichez un spinner ou un message de chargement
+  }
+  
+
   return (
     <div className='MainDash'>
        
@@ -21,7 +54,7 @@ const Maindash = () => {
                     <div className="p-3 m-1">
                       <h4>Welcome Back, Admin</h4>
                       <p className="mb-0">
-                        Admin Dashboard, name lastname
+                        Admin Dashboard, {currentUser?.name || 'User'}
                       </p>
                     </div>
                   </div>

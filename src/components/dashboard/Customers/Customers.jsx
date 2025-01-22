@@ -1,18 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Customers.css';
+import axios from 'axios';
+import { fetchUsers , fetchFilesCount } from '../../../Services/UserService';
 
 const Customers = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const developers = [
-    { id: 1, name: 'John Doe', AdminStatus: 'admin', ActiveStatus: 'actif', createdFiles: 15 },
-    { id: 2, name: 'Jane Smith', AdminStatus: 'user', ActiveStatus: 'inactif', createdFiles: 30 },
-    { id: 3, name: 'Alice Johnson', AdminStatus: 'user', ActiveStatus: 'actif', createdFiles: 10 },
-  ];
+  const [developers, setDevelopers] = useState([]);
+  const [filesCount, setFilesCount] = useState([]);
+
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem('token'); // Récupérez le token JWT
+      const response = await axios.get('http://localhost:3000/user/all', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Ajoutez le token dans les en-têtes
+        },
+      });
+
+       // Récupérer le nombre de fichiers par utilisateur
+       const filesResponse = await axios.get('http://localhost:3000/file/countByUser', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setDevelopers(response.data); // Mettre à jour l'état avec les données des utilisateurs
+      setFilesCount(filesResponse.data);
+
+    } catch (error) {
+      console.error('Error fetching users:', error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   // Filtrer les développeurs en fonction de la recherche
   const filteredDevelopers = developers.filter(dev =>
     dev.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Trouver le nombre de fichiers pour chaque utilisateur
+  const getFilesCountForUser = (userId) => {
+    const userFile = filesCount.find(fileData =>  fileData._id.toString() === userId.toString());
+    return userFile ? userFile.totalFiles : 0;
+  };
 
   return (
     <div className="developers-list">
@@ -41,9 +74,9 @@ const Customers = () => {
             filteredDevelopers.map(dev => (
               <tr key={dev.id}>
                 <td>{dev.name}</td>
-                <td>{dev.AdminStatus}</td>
-                <td>{dev.ActiveStatus}</td>
-                <td>{dev.createdFiles}</td>
+                <td>{dev.role}</td>
+                <td>{dev.ActiveStatus || 'actif'}</td>
+                <td>{getFilesCountForUser(dev._id)}</td>
               </tr>
             ))
           ) : (

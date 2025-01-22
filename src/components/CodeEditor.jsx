@@ -1,61 +1,26 @@
-import { Box, HStack } from '@chakra-ui/react';
+import { Box, Button, HStack } from '@chakra-ui/react';
 import { Editor } from '@monaco-editor/react';
 import React, { useEffect, useRef, useState } from 'react';
 import LanguageSelector from './LanguageSelector';
 import { CODE_SNIPPETS } from '../constants';
 import Output from './Output';
-import * as monaco from 'monaco-editor';
-import { languages } from 'monaco-editor';
-import Linting from './Linting';
-import { Button } from '@mui/material';
-import prettier from 'prettier';
-import { editor, KeyMod, KeyCode } from 'monaco-editor';
-
-const setupCustomTheme = () => {
-  monaco.editor.defineTheme('myCustomTheme', {
-    base: 'vs-dark', // ou 'vs' pour le thème clair
-    inherit: true,
-    rules: [
-      { token: 'comment', foreground: 'ffa500', fontStyle: 'italic' }, // Commentaires en orange
-      { token: 'keyword', foreground: '00ff00' }, // Mots-clés en vert
-    ],
-    colors: {
-      'editor.background': '#1e1e1e', // Fond de l'éditeur
-      'editor.foreground': '#ffffff', // Texte principal
-    },
-  });
-
-  // Appliquer le thème
-  monaco.editor.setTheme('myCustomTheme');
-};
-
-const setupSnippets = () => {
-  languages.registerCompletionItemProvider('javascript', {
-    provideCompletionItems: () => {
-      return {
-        suggestions: [
-          {
-            label: 'log', // Texte affiché dans la liste de suggestions
-            kind: languages.CompletionItemKind.Snippet, // Type de suggestion
-            insertText: 'console.log(${1:message});', // Snippet à insérer
-            insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
-            detail: 'Log a message to the console', // Description
-          },
-        ],
-      };
-    },
-  });
-};
+import { useLocation } from 'react-router-dom';
+import { updateFile , addFile } from '../Services/FileService';
 
 const CodeEditor = () => {
+  const location = useLocation();
   const [value, setValue] = useState('');
   const [language, setLanguage] = useState('javascript');
   const editorRef = useRef();
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
-    setupCustomTheme();
-    setupSnippets();
-  }, []);
+    if (location.state?.file) {
+      const { content } = location.state.file;
+      setValue(content || '');
+      setFile(location.state.file); // Conserve les infos du fichier
+    }
+  }, [location.state]);
 
   const onMount = (editor) => {
     editorRef.current = editor;
@@ -67,47 +32,30 @@ const CodeEditor = () => {
     setValue(CODE_SNIPPETS[language]);
   };
 
-  const formatCode = () => {
-    if (editorRef.current) {
-      const model = editorRef.current.getModel();
-      const code = model.getValue();
-      try {
-        const formattedCode = prettier.format(code, {
-          parser: 'babel',
-          plugins: [require('prettier/parser-babel')],
-        });
-        model.setValue(formattedCode);
-      } catch (error) {
-        console.error('Error formatting code:', error);
+  const handleSaveOrUpdate = async () => {
+    const content = editorRef.current.getValue();
+    try {
+      if (file) {
+        const updatedFile = await updateFile(file._id, content);
+        alert(`Fichier mis à jour : ${updatedFile.name}`);
+      } else {
+        const newFile = await addFile(`File_${Date.now()}`, content);
+        alert(`Fichier sauvegardé : ${newFile.name}`);
       }
+    } catch (error) {
+      console.error('Erreur :', error);
+      alert('Échec de la sauvegarde ou mise à jour');
     }
   };
 
-  React.useEffect(() => {
-    const disposable = editorRef.current.addCommand(KeyMod.CtrlCmd | KeyCode.Enter, () => {
-      const code = editorRef.current.getModel().getValue();
-      console.log('Running code:', code);
-      // Exécuter le code ici
-    });
 
-    return () => disposable.dispose();
-  }, []);
-
-  const debugCode = () => {
-    const code = editorRef.current.getModel().getValue();
-    eval(code); 
-  };
   return (
     <Box>
+      
       <HStack spacing={4}>
+      
         <Box w="50%">
-          <LanguageSelector language={language} onSelect={onSelect} />
-          <Button onClick={formatCode} colorScheme="blue" mb={4}>
-            Format Code
-          </Button>
-          <Button onClick={debugCode} colorScheme="red" mb={4}>
-            Debug Code
-          </Button>
+          <LanguageSelector language={language} onSelect={onSelect} />  
           <Editor
             options={{
               minimap: {
@@ -123,9 +71,15 @@ const CodeEditor = () => {
             onChange={(value) => setValue(value)}
           />
         </Box>
+
+        <Button colorScheme="blue" mt={4} onClick={handleSaveOrUpdate}>
+          {file ? 'Update' : 'Save'}
+        </Button>
         <Output editorRef={editorRef} language={language} />
+
       </HStack>
-      <Linting editorRef={editorRef} />
+
+
     </Box>
   );
 };

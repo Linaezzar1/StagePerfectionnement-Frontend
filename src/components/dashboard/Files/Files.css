@@ -55,3 +55,19 @@
   .files{
     margin-top: 50px;
   }
+
+  .file-actions {
+    margin-top: 10px;
+  }
+  
+  .file-actions button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .file-actions button:hover {
+    opacity: 0.8;
+  }
+  

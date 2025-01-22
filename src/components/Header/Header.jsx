@@ -9,10 +9,27 @@ import { LuLogOut } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDashboard } from "react-icons/md";
 import { MdOutlineAnalytics } from "react-icons/md";
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    // Récupérer le token depuis le localStorage
+    const token = localStorage.getItem('token');
+
+    // Décoder le token pour obtenir les informations de l'utilisateur
+    const decodedToken = token ? jwtDecode(token) : null;
+    const userRole = decodedToken?.role;
+
+
+    const handleLogout = () => {
+        dispatch({ type: 'LOGOUT' });
+        navigate('/login');
+    };
+
 
     return (
         <div className='boxContainer'>
@@ -40,9 +57,16 @@ const Header = () => {
 
                         <Dropdown.Menu className='dropdown-menu'>
                             <Dropdown.Item onClick={ ()=>  navigate('/profile') }> <CgProfile /> My Profile </Dropdown.Item>
-                            <Dropdown.Item onClick={ ()=>  navigate('/dashboard/maindash') }> <MdOutlineDashboard /> Dashboard</Dropdown.Item>
+                            
+                            {userRole === 'admin' && (
+                                <Dropdown.Item onClick={() => navigate('/dashboard/maindash')}>
+                                    <MdOutlineDashboard /> Dashboard
+                                </Dropdown.Item>
+                            )}
+                            
+                            
                             <Dropdown.Item onClick={ ()=>  navigate('/mainAnalytics') }> <MdOutlineAnalytics /> Analytics</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3" className='logout-menu'><LuLogOut className='icon-logout' /> Logout</Dropdown.Item>
+                            <Dropdown.Item onClick={handleLogout} className='logout-menu'><LuLogOut className='icon-logout' /> Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Box>

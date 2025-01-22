@@ -54,6 +54,7 @@
     border-radius: 6px; 
     background-color: #fafafad2; 
     transition: border-color 0.3s ease; 
+    color: #333;
   }
   
   .info-item input:focus {

@@ -1,20 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Files.css';
+import { useNavigate } from 'react-router-dom';
+import { getAllFiles , deleteFile } from '../../../Services/FileService'; 
 
 const Files = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [files] = useState([
-    { id: 1, name: 'file1.txt', lastModified: '2025-01-10', size: '1.2 MB' },
-    { id: 2, name: 'file2.docx', lastModified: '2025-01-09', size: '2.5 MB' },
-    { id: 3, name: 'file3.pdf', lastModified: '2025-01-08', size: '3.0 MB' },
-    { id: 4, name: 'file4.js', lastModified: '2025-01-07', size: '512 KB' },
-    { id: 5, name: 'file5.css', lastModified: '2025-01-06', size: '256 KB' },
-  ]);
+  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const filteredFiles = files.filter(file =>
+  useEffect(() => {
+    const fetchFiles = async () => {
+      try {
+        const data = await getAllFiles();
+        setFiles(data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des fichiers :', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFiles();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteFile(id);
+      setFiles(files.filter((file) => file._id !== id));
+    } catch (error) {
+      console.error('Erreur lors de la suppression du fichier :', error);
+    }
+  };
+
+  const handleEdit = (file) => {
+    navigate('/editor', { state: { file } });
+  };
+
+  
+
+  // Filtrer les fichiers par recherche
+  const filteredFiles = files.filter((file) =>
     file.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  if (loading) {
+    return <div>Chargement des fichiers...</div>;
+  }
+
 
   return (
     <div className="files">
@@ -34,11 +68,14 @@ const Files = () => {
       <div className="files-list">
         {filteredFiles.length > 0 ? (
           filteredFiles.map(file => (
-            <div key={file.id} className="file-item">
+            <div  className="file-item">
               <div className="file-name">{file.name}</div>
               <div className="file-details">
-                <span>Last Modified: {file.lastModified}</span>
-                <span>Size: {file.size}</span>
+                <span>Updated At : {file.updatedAt}</span>
+              </div>
+              <div className="file-actions">
+                <button onClick={() => handleEdit(file)}>Edit</button>
+                <button onClick={() => handleDelete(file._id)}>Delete</button>
               </div>
             </div>
           ))
