@@ -1,39 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import './Customers.css';
-import axios from 'axios';
-import { fetchUsers , fetchFilesCount } from '../../../Services/UserService';
+import { fetchUsers, fetchFilesCount, detectActivity, } from '../../../Services/UserService';
 
 const Customers = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [developers, setDevelopers] = useState([]);
   const [filesCount, setFilesCount] = useState([]);
 
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem('token'); // Récupérez le token JWT
-      const response = await axios.get('http://localhost:3000/user/all', {
-        headers: {
-          Authorization: `Bearer ${token}`, // Ajoutez le token dans les en-têtes
-        },
-      });
-
-       // Récupérer le nombre de fichiers par utilisateur
-       const filesResponse = await axios.get('http://localhost:3000/file/countByUser', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setDevelopers(response.data); // Mettre à jour l'état avec les données des utilisateurs
-      setFilesCount(filesResponse.data);
-
-    } catch (error) {
-      console.error('Error fetching users:', error.response?.data || error.message);
-    }
-  };
-
   useEffect(() => {
-    fetchUsers();
+    const fetchData = async () => {
+      try {
+        // Récupération des utilisateurs
+        const users = await fetchUsers();
+        setDevelopers(users);
+
+        // Récupération des fichiers par utilisateur
+        const filesData = await fetchFilesCount();
+        setFilesCount(filesData);
+
+        // Détection d'activité pour chaque utilisateur
+        users.forEach((user) => {
+          detectActivity(user._id);
+        });
+      } catch (error) {
+        console.error('Erreur lors du chargement des données :', error.message);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Filtrer les développeurs en fonction de la recherche
@@ -75,7 +69,7 @@ const Customers = () => {
               <tr key={dev.id}>
                 <td>{dev.name}</td>
                 <td>{dev.role}</td>
-                <td>{dev.ActiveStatus || 'actif'}</td>
+                <td>{dev.ActiveStatus || 'Active'}</td>
                 <td>{getFilesCountForUser(dev._id)}</td>
               </tr>
             ))

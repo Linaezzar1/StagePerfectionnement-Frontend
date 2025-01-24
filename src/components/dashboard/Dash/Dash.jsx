@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './Dash.css'
 import chart from '../../../imgs/chart-dynamic-premium.png'
-import axios from 'axios';
+
+import { fetchCurrentUser } from '../../../Services/UserService';
 
 
 
@@ -11,27 +12,20 @@ const Maindash = () => {
   const [loading, setLoading] = useState(true); // State pour gérer le chargement
 
   // Fonction pour récupérer l'utilisateur connecté
-  const fetchCurrentUser = async () => {
-      try {
-          const token = localStorage.getItem('token'); // Récupère le token JWT
-          const response = await axios.get('http://localhost:3000/user/currentUser', {
-              headers: {
-                  Authorization: `Bearer ${token}`,
-              },
-          });
-          setCurrentUser(response.data); // Met à jour le state avec les données de l'utilisateur
-      } catch (error) {
-          console.error('Error fetching current user:', error);
-      } finally {
-          setLoading(false); // Arrête le chargement
-      }
-  };
-
-  // Appel de la fonction au montage du composant
   useEffect(() => {
-      fetchCurrentUser();
-  }, []);
+    const getCurrentUser = async () => {
+      try {
+        const user = await fetchCurrentUser(); // Utiliser la fonction de service
+        setCurrentUser(user); // Mettre à jour le state avec les données de l'utilisateur
+      } catch (error) {
+        console.error('Erreur lors de la récupération de l’utilisateur connecté :', error);
+      } finally {
+        setLoading(false); // Arrêter le chargement
+      }
+    };
 
+    getCurrentUser();
+  }, []);
   // Affichage pendant le chargement
   if (loading) {
       return <div>Loading...</div>; // Affichez un spinner ou un message de chargement

@@ -82,11 +82,11 @@ export const updateFile = async (id, content) => {
   };
 
 // Ajouter un nouveau fichier
-export const addFile = async (name, content) => {
+export const addFile = async (name, content , language) => {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/file/addFile`,
-        { name, content },
+        { name, content, language },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`, // Si l'authentification est requise

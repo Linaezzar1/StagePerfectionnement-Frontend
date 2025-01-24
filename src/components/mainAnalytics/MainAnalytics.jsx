@@ -10,10 +10,17 @@ const MainAnalytics = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const created = await getCreatedFilesThisWeek();
-      const modified = await getModifiedFilesThisWeek();
-      setCreatedFiles(created);
-      setModifiedFiles(modified);
+        try {
+            const created = await getCreatedFilesThisWeek();
+            const modified = await getModifiedFilesThisWeek();
+            console.log('Created Files:', created); // Vérifiez la valeur
+            console.log('Modified Files:', modified); // Vérifiez la valeur
+            setCreatedFiles(created);
+            setModifiedFiles(modified);
+          } catch (error) {
+            console.error('Erreur lors de la récupération des statistiques:', error);
+            alert('Une erreur est survenue lors du chargement des statistiques.');
+          }
     };
 
     fetchStats();
