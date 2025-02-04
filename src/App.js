@@ -9,13 +9,16 @@ import Customers from './components/dashboard/Customers/Customers';
 import DashboardLayout from './components/dashboard/Dashboardlayout';
 import Profile from './components/Profile/Profile';
 import MainAnalytics from './components/mainAnalytics/MainAnalytics';
-import ProtectedRoute from './components/ProtectedRoute';
-import MainEditor from './components/MainEditor';
+import ProtectedRoute from './components/CodeEditor/ProtectedRoute';
+import MainEditor from './components/CodeEditor/MainEditor';
+import UserFilesProfile from './components/UserFilesProfile/UserFilesProfile';
+import MainUserFiles from './components/UserFilesProfile/MainUserFiles';
 
 
 
 
 function App() {
+  
   return (
 
     <div className="App">
@@ -45,6 +48,8 @@ function App() {
             path='/editor'
             element={<ProtectedRoute element={MainEditor } />}
           />
+
+          <Route path='/UserFilePage' element= {<ProtectedRoute element={MainUserFiles} />} />
           {/* Route par défaut (redirige vers /login) */}
           <Route path="/" element={<LoginSignup />} />
 

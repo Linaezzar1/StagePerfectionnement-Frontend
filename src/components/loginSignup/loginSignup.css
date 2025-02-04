@@ -1,7 +1,8 @@
 .wrapper {
     position: relative;
+    top: 40px;
     width: 420px;
-    height: 450px;
+    min-height: 85vh;
     background: rgba(81, 81, 80, 0.297);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);

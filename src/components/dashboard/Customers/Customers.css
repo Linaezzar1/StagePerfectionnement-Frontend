@@ -26,3 +26,14 @@
   .developers-list th {
     background-color: #fcfcf7;
   }
+  .deleteBtn{
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(197, 27, 27, 0.893);
+    color: #fcfcf7;
+  }
+
+  .deleteBtn:hover{
+    background-color: rgba(146, 35, 35, 0.893) ;
+  }

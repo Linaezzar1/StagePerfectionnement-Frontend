@@ -1,6 +1,7 @@
 const initState = {
     isLogged: localStorage.getItem('token') ? true : false,
     token: localStorage.getItem('token') || null,
+    
     isLoading: false,
     error: null
 }

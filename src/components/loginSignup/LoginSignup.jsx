@@ -55,7 +55,7 @@ const Login = () => {
             dispatch(login(token)); 
             dispatch(setLoading(false));
 
-            navigate('/editor');
+            navigate('/UserFilePage');
         } catch (error) {
             console.error(error);
             dispatch(setError("Login failed. Please check your credentials."));

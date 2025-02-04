@@ -18,13 +18,7 @@ export const fetchUsers = async () => {
   return response.data;
 };
 
-// Service pour récupérer le nombre de fichiers par utilisateur
-export const fetchFilesCount = async () => {
-  const response = await axios.get(`${API_BASE_URL}/file/countByUser`, {
-    headers: getHeaders(),
-  });
-  return response.data;
-};
+
 
 export const fetchCurrentUser = async () => {
     const response = await axios.get(`${API_BASE_URL}/user/currentUser`, {
@@ -32,6 +26,21 @@ export const fetchCurrentUser = async () => {
     });
     return response.data;
   };
+
+
+// Service pour supprimer un utilisateur
+export const deleteUser = async (userId) => {
+  try {
+    const response = await axios.delete(`${API_BASE_URL}/user/deleteUser`, {
+      headers: getHeaders(),
+      data: { userId }  // Envoi de l'ID de l'utilisateur dans le corps de la requête
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erreur lors de la suppression de l\'utilisateur :', error.message);
+    throw error;
+  }
+};
 
 // Service pour mettre à jour le statut d'activité
 export const updateActiveStatus = async (userId, isActive) => {

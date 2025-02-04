@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Customers.css';
-import { fetchUsers, fetchFilesCount, detectActivity, } from '../../../Services/UserService';
+import { fetchUsers, detectActivity, deleteUser } from '../../../Services/UserService';
+import { fetchFilesCount } from '../../../Services/FileService';
+import Swal from 'sweetalert2';
 
 const Customers = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,6 +18,7 @@ const Customers = () => {
 
         // Récupération des fichiers par utilisateur
         const filesData = await fetchFilesCount();
+        console.log('Files Count Data:', filesData);
         setFilesCount(filesData);
 
         // Détection d'activité pour chaque utilisateur
@@ -37,8 +40,46 @@ const Customers = () => {
 
   // Trouver le nombre de fichiers pour chaque utilisateur
   const getFilesCountForUser = (userId) => {
-    const userFile = filesCount.find(fileData =>  fileData._id.toString() === userId.toString());
+    if (!filesCount || filesCount.length === 0) return 0; // Si filesCount est vide, retourner 0
+
+    const userFile = filesCount.find(fileData => {
+      if (!fileData || !fileData.userId) return false; // Ignorer les éléments invalides
+      return String(fileData.userId) === String(userId); // Comparer les ID sous forme de chaînes
+    });
+
     return userFile ? userFile.totalFiles : 0;
+  };
+  const handleDeleteUser = async (userId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete!",
+      cancelButtonText: "Cancel"
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteUser(userId);
+        setDevelopers(developers.filter(dev => dev._id !== userId));
+
+        Swal.fire(
+          "Deleted!",
+          "The user has been successfully deleted.",
+          "success"
+        );
+      } catch (error) {
+        Swal.fire(
+          "Error!",
+          "Failed to delete the user.",
+          "error"
+        );
+        console.error("Erreur lors de la suppression de l'utilisateur :", error.message);
+      }
+    }
   };
 
   return (
@@ -47,7 +88,7 @@ const Customers = () => {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Rechercher un développeur..."
+          placeholder="Search a developer..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -61,16 +102,18 @@ const Customers = () => {
             <th>Admin status</th>
             <th>Active status</th>
             <th>Total files created</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredDevelopers.length > 0 ? (
             filteredDevelopers.map(dev => (
-              <tr key={dev.id}>
+              <tr key={dev._id}>
                 <td>{dev.name}</td>
                 <td>{dev.role}</td>
                 <td>{dev.ActiveStatus || 'Active'}</td>
                 <td>{getFilesCountForUser(dev._id)}</td>
+                <td> <button className='deleteBtn' onClick={() => handleDeleteUser(dev._id)}>Delete</button> </td>
               </tr>
             ))
           ) : (
