@@ -53,8 +53,8 @@ const Analytics = () => {
           <p>{createdFilesData.reduce((a, b) => a + b, 0)}</p> {/* Total des fichiers créés */}
         </div>
         <div className="stat-item">
-          <h3>Active Developers </h3>
-          <p>dzs</p> {/* Total des fichiers modifiés */}
+          <h3>Modified files / month </h3>
+          <p>{modifiedFilesData.reduce((a, b) => a + b, 0)}</p> {/* Total des fichiers modifiés */}
         </div>
       </div>
 

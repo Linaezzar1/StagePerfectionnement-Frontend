@@ -184,7 +184,19 @@ export const fetchFilesCreatedByDay = async () => {
   }
 };
 
-
+export const fetchFilesModifiedByDay = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/file/modifiedperday`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data; // Assurez-vous que response.data est un tableau
+  } catch (error) {
+    console.error("Erreur lors de la récupération du nombre de fichiers modifiés par jour :", error);
+    return []; // Retourner un tableau vide en cas d'erreur
+  }
+};
 
 
 

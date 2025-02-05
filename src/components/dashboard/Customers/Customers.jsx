@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Customers.css';
-import { fetchUsers, detectActivity, deleteUser } from '../../../Services/UserService';
+import { fetchUsers, detectActivity, deleteUser, updateLastActive } from '../../../Services/UserService';
 import { fetchFilesCount } from '../../../Services/FileService';
 import Swal from 'sweetalert2';
 
@@ -21,10 +21,6 @@ const Customers = () => {
         console.log('Files Count Data:', filesData);
         setFilesCount(filesData);
 
-        // Détection d'activité pour chaque utilisateur
-        users.forEach((user) => {
-          detectActivity(user._id);
-        });
       } catch (error) {
         console.error('Erreur lors du chargement des données :', error.message);
       }
@@ -82,6 +78,35 @@ const Customers = () => {
     }
   };
 
+  const handleUserActivity = async (userId) => {
+    try {
+        const response = await updateLastActive(userId); // Appelle l'API
+        if (!response || !response.lastActive) {
+          throw new Error("Invalid response from server");
+      }
+
+      setDevelopers(prevDevelopers =>
+        prevDevelopers.map(dev =>
+            dev._id === userId ? { ...dev, lastActive: response.lastActive } : dev
+        )
+    );
+        Swal.fire({
+            icon: 'success',
+            title: `Last Activity: ${new Date(response.lastActive).toLocaleString()}`,
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Failed to update user activity',
+            text: error.message,
+        });
+    }
+};
+
+
   return (
     <div className="developers-list">
       {/* Barre de recherche */}
@@ -100,7 +125,7 @@ const Customers = () => {
           <tr>
             <th>Name</th>
             <th>Admin status</th>
-            <th>Active status</th>
+            <th>Last activity</th>
             <th>Total files created</th>
             <th>Actions</th>
           </tr>
@@ -111,9 +136,12 @@ const Customers = () => {
               <tr key={dev._id}>
                 <td>{dev.name}</td>
                 <td>{dev.role}</td>
-                <td>{dev.ActiveStatus || 'Active'}</td>
+                <td>
+                  {dev.lastActive ? new Date(dev.lastActive).toLocaleString() : 'N/A'}
+                </td>
                 <td>{getFilesCountForUser(dev._id)}</td>
-                <td> <button className='deleteBtn' onClick={() => handleDeleteUser(dev._id)}>Delete</button> </td>
+                <td>
+                  <button className='deleteBtn' onClick={() => handleDeleteUser(dev._id)}>Delete</button> </td>
               </tr>
             ))
           ) : (

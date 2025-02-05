@@ -1,10 +1,9 @@
 import { Box, Button, ChakraProvider } from '@chakra-ui/react';
 import CodeEditor from './CodeEditor';
 import theme from '../theme';
-import backgroundImage from '../../imgs/R.jpg'
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../Header/Header';
+
 
 
 
@@ -25,7 +24,7 @@ const EditorWrapper = () => {
           <CodeEditor ref={editorRef} />
         </Box>
         
-        
+       
       </Box>
     </ChakraProvider>
    

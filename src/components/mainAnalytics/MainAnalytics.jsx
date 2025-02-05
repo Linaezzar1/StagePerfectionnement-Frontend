@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { getCreatedFilesThisWeek, getModifiedFilesThisWeek, fetchFilesCreatedByDay } from '../../Services/FileService';
+import { getCreatedFilesThisWeek, getModifiedFilesThisWeek, fetchFilesCreatedByDay , fetchFilesModifiedByDay } from '../../Services/FileService';
 import './MainAnalytics.css'
 import { format, subDays } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -10,6 +10,7 @@ const MainAnalytics = () => {
   const [createdFiles, setCreatedFiles] = useState(0);
   const [modifiedFiles, setModifiedFiles] = useState(0);
   const [fileData, setFileData] = useState([]);
+  const [modifiedFileData, setModifiedFileData] = useState([]);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -32,27 +33,38 @@ const MainAnalytics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchFilesCreatedByDay();
-        console.log("Données brutes :", data);
-
-        // Générer les 7 derniers jours
+        const createdData = await fetchFilesCreatedByDay();
+        const modifiedData = await fetchFilesModifiedByDay();
+        console.log("Données brutes (créées) :", createdData);
+        console.log("Données brutes (modifiées) :", modifiedData);
+  
+        // Générer les 7 derniers jours avec initialisation des valeurs à 0
         let last7Days = Array.from({ length: 7 }, (_, i) => {
           const date = subDays(new Date(), i);
           return {
             day: format(date, "EEEE", { locale: fr }), // "lundi", "mardi", ...
             date: format(date, "yyyy-MM-dd"),
-            totalFiles: 0, // Initialiser à 0
+            totalFilesCreated: 0, 
+            totalFilesModified: 0,
           };
         }).reverse();
-
-        // Remplir avec les données récupérées
-        data.forEach(({ _id, count }) => {
+  
+        // Remplir les données créées
+        createdData.forEach(({ _id, count }) => {
           let dayObj = last7Days.find((d) => d.date === _id);
           if (dayObj) {
-            dayObj.totalFiles = count;
+            dayObj.totalFilesCreated = count;
           }
         });
-
+  
+        // Remplir les données modifiées
+        modifiedData.forEach(({ _id, count }) => {
+          let dayObj = last7Days.find((d) => d.date === _id);
+          if (dayObj) {
+            dayObj.totalFilesModified = count;
+          }
+        });
+  
         console.log("Données finales formatées :", last7Days);
         setFileData(last7Days);
       } catch (error) {
@@ -61,20 +73,18 @@ const MainAnalytics = () => {
     };
     fetchData();
   }, []);
+  
 
   const statsData = [
     { title: 'Fichiers créés cette semaine', value: createdFiles },
     { title: 'Fichiers modifiés cette semaine', value: modifiedFiles },
-    { title: 'Nombre de commits', value: '78' }, // Exemple statique
-    { title: 'Nombre de pushs', value: '56' }, // Exemple statique
   ];
 
   // Données fictives pour le graphique
   const chartData = fileData.map((day) => ({
     name: day.day.charAt(0).toUpperCase() + day.day.slice(1), // "Lundi", "Mardi", ...
-    fichiers: day.totalFiles,  
-    commits: Math.floor(Math.random() * 15),
-    pushs: Math.floor(Math.random() * 10),
+    createdFiles: day.totalFilesCreated,  
+    modifiedFiles: day.totalFilesModified,
 }));
   return (
     <div className="mainAnalytics-container">
@@ -94,7 +104,7 @@ const MainAnalytics = () => {
 
         {/* Graphique des tendances */}
         <div className="chart-container">
-          <h2>Activité des développeurs cette semaine</h2>
+          <h2>Developers activity this week</h2>
           <LineChart
             width={800}
             height={400}
@@ -106,9 +116,9 @@ const MainAnalytics = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="fichiers" stroke="#8884d8" />
-            <Line type="monotone" dataKey="commits" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="pushs" stroke="#ff8042" />
+            <Line type="monotone" dataKey="createdFiles" stroke="#8884d8" />
+            <Line type="monotone" dataKey="modifiedFiles" stroke="#82ca9d" />
+
           </LineChart>
         </div>
       </div>

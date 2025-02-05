@@ -44,10 +44,6 @@ const Header = () => {
                 {/* ICONS */}
                 <Box display="flex" sx={{ marginLeft: 'auto', gap: '8px' }}>
 
-                    {/* Notification Icon */}
-                    <IconButton>
-                        <NotificationsOutlinedIcon />
-                    </IconButton>
 
                     {/* User Icon with Dropdown */}
                     <Dropdown>

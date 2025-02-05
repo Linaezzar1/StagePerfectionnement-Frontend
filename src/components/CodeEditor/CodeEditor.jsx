@@ -7,7 +7,7 @@ import Output from '../CodeEditor/Output';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { updateFile, addFile } from '../../Services/FileService';
 import { FaFileExport } from "react-icons/fa";
-import TerminalComponent from '../CodeEditor/Terminal';
+
 import { FaFastBackward } from "react-icons/fa";
 
 
@@ -48,24 +48,6 @@ const CodeEditor = () => {
     // Ajoutez d'autres extensions et langages au besoin
   };
 
-  const handleTerminalCommand = async (command) => {
-    try {
-      const response = await fetch('http://localhost:3000/terminal/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command }),
-      });
-
-      const data = await response.json();
-      if (data.output) {
-        return data.output;
-      } else if (data.error) {
-        return `Erreur : ${data.error}`;
-      }
-    } catch (error) {
-      return `Erreur : ${error.message}`;
-    }
-  };
 
 
   const connectWebSocket = () => {

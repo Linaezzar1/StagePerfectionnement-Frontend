@@ -37,3 +37,11 @@
   .deleteBtn:hover{
     background-color: rgba(146, 35, 35, 0.893) ;
   }
+
+  .updateBtn{
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(36, 44, 116, 0.893);
+    color: #fcfcf7;
+  }
