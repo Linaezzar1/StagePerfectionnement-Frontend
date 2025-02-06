@@ -3,6 +3,7 @@ import CodeEditor from './CodeEditor';
 import theme from '../theme';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MessageBubble from '../MessageBubble/MessageBubble';
 
 
 
@@ -27,7 +28,7 @@ const EditorWrapper = () => {
        
       </Box>
     </ChakraProvider>
-   
+    <MessageBubble />
 
     </div>
   );

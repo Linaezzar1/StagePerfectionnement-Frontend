@@ -13,7 +13,6 @@ import ProtectedRoute from './components/CodeEditor/ProtectedRoute';
 import MainEditor from './components/CodeEditor/MainEditor';
 import UserFilesProfile from './components/UserFilesProfile/UserFilesProfile';
 import MainUserFiles from './components/UserFilesProfile/MainUserFiles';
-import MessageBubble from './components/MessageBubble/MessageBubble';
 
 
 
@@ -57,7 +56,7 @@ function App() {
           <Route path='/mainAnalytics'  element={<ProtectedRoute element={MainAnalytics} />} />
         </Routes>
       </BrowserRouter>
-      <MessageBubble />
+      
     </div >
 
 

@@ -4,6 +4,7 @@ import { getCreatedFilesThisWeek, getModifiedFilesThisWeek, fetchFilesCreatedByD
 import './MainAnalytics.css'
 import { format, subDays } from "date-fns";
 import { fr } from "date-fns/locale";
+import MessageBubble from '../MessageBubble/MessageBubble';
 
 
 const MainAnalytics = () => {
@@ -121,7 +122,9 @@ const MainAnalytics = () => {
 
           </LineChart>
         </div>
+       
       </div>
+      <MessageBubble />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from '../Header/Header';
+import MessageBubble from '../MessageBubble/MessageBubble';
 
 const DashboardLayout = () => {
     return (
@@ -14,6 +15,7 @@ const DashboardLayout = () => {
                 {/* Outlet pour afficher les composants enfants */}
                 <Outlet />
             </main>
+            <MessageBubble />
         </div>
     );
 };

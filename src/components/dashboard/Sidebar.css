@@ -57,11 +57,11 @@
     bottom: 2.3rem;
     width: 100%;
   }
-  .active {
+  .Sidebar .active {
     background:rgba(223, 203, 73, 0.536) ;
     margin-left: 0;
   }
-  .active::before {
+  .Sidebar .active::before {
     content: "";
     width: 8px;
     height: 100%;

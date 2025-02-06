@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../Header/Header'
 import UserFilesProfile from './UserFilesProfile'
 import './UserFilesProfile.css'
+import MessageBubble from '../MessageBubble/MessageBubble'
 
 const MainUserFiles = () => {
     return (
@@ -11,6 +12,8 @@ const MainUserFiles = () => {
 
 
             <UserFilesProfile />
+
+            <MessageBubble />
             
         </div>
     )
