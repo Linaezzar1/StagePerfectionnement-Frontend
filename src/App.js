@@ -13,6 +13,7 @@ import ProtectedRoute from './components/CodeEditor/ProtectedRoute';
 import MainEditor from './components/CodeEditor/MainEditor';
 import UserFilesProfile from './components/UserFilesProfile/UserFilesProfile';
 import MainUserFiles from './components/UserFilesProfile/MainUserFiles';
+import Message from './components/dashboard/Messages/Message';
 
 
 
@@ -36,6 +37,8 @@ function App() {
             <Route path='files' element={<Files />} />
             {/* Route pour les clients */}
             <Route path='customers' element={<Customers />} />
+            {/*Route pour les messages*/}
+            <Route path='messages' element={<Message />} />
             {/* Route pour les analyses */}
             <Route path='analytics' element={<Analytics />} />
             {/* Route par défaut pour /dashboard */}

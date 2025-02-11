@@ -4,6 +4,7 @@ import {
     UilClipboardAlt,
     UilUsersAlt,
     UilChart,
+    UilMessage,
 } from "@iconscout/react-unicons";
 
 
@@ -26,11 +27,16 @@ export const SidebarData = [
         heading: "Customers",
         path: '/dashboard/customers'
     },
-    
+    {
+        icon: UilMessage,
+        heading: "Messages",
+        path: '/dashboard/messages'
+    },
     {
         icon: UilChart,
         heading: "Analytics",
         path: '/dashboard/analytics'
     },
+ 
 ];
 
